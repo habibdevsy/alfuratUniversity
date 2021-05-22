@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% form_theme editform 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}تعديل مادة{% endblock %}
+
+
+{% block body %}
+<br />
+ <div class="alert alert-dismissible alert-primary">
+    <h2 style="text-align:center">تعديل مادة</h2>
+</div>
+
+<br />
+
+ {{ form_start(editform) }}
+ {{ form_widget(editform) }}
+ 
+ <br />
+
+<button type="submit" class="btn btn-success">تعديل </button>
+{{ form_end(editform) }}
+{% endblock %}

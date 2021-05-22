@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}الطلاب{% endblock %}
+{% block head %}
+
+{% endblock %}
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+  
+</style>
+
+      <form class="example-wrapper" role="search" id="form" method="GET" action="{{ path('search') }}">
+    <div>
+        <input type="text" class="form-control" name="search" id="search" placeholder="أدخل اسم طالب">
+        <button type="submit" class="btn btn-success" name="sub">بحث</button>
+    </div>
+    </form>
+
+ {# <script>
+         $("input").keyup(function(){
+            $('#form').delay(500).submit();
+     }); 
+   
+
+    </script>  #}
+
+
+<table class="table table-hover" id="table">
+  <thead>
+    <tr>
+      <th scope="col"> اسم الطالب</th>
+      <th scope="col">الرقم الجامعي</th>
+      <th scope="col">الكلية</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for user in users %}
+    <tr class="table-active">
+      <td id="td">{{user.userName}}</td>
+      <td id="td">{{user.cardNumber}}</td>
+      <td id="td">{{user.college.collegeName}}</td>
+       <td> 
+        <a class="btn btn-primary" href="{{ path('user_edit', { id: user.id }) }}">تعديل</a>
+        </td> 
+    </tr>
+  {% endfor %}
+       
+  </tbody>
+  </table>
+  
+    <div class="navigation mt-5">
+        {{ knp_pagination_render(users) }}
+    </div>
+    
+{% endblock %}
