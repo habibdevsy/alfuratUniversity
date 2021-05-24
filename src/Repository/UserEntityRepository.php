@@ -8,6 +8,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Query\Expr\Join;
+
 
 /**
  * @method UserEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -33,5 +35,14 @@ class UserEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getUserByCardNumber($cardNumber){
+        
+        return $this->createQueryBuilder('user')
+        ->andWhere('user.cardNumber = :cardNumber')
+        ->setParameter('cardNumber', $cardNumber)
+        ->getQuery()
+        ->getResult();
     }
 }

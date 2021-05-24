@@ -57,7 +57,6 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
             Security::LAST_USERNAME,
             $credentials['username']
         );
-// dd($credentials);
         return $credentials;
     }
 
@@ -80,11 +79,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        // return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-        $pass = $this->entityManager->getRepository(UserRegistration::class)->findOneBy(['password' => $credentials['password']]);
-     
-       
-            return(true);
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
         
     }
 
@@ -101,9 +96,14 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
+       
+        if($token->getroleNames()[0] == "ROLE_ADMIN") {
+        return new RedirectResponse($this->urlGenerator->generate('createCollege'));
+        }
+        if($token->getroleNames()[0] == "ROLE_USER") {
+        return new RedirectResponse($this->urlGenerator->generate('my_grade'));
+        }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        return new RedirectResponse($this->urlGenerator->generate('show_users'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

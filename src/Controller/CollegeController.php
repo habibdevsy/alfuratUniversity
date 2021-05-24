@@ -26,6 +26,7 @@ class CollegeController extends AbstractController
 
      /**
      * @Route("/college", name="createCollege")
+     * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
@@ -41,8 +42,9 @@ class CollegeController extends AbstractController
             $entityManager->persist($data);
             $entityManager->flush();
             $entityManager->clear();
-            // return $this->redirectToRoute('task_success');
+    
             $this->flashy->success('Event created!');
+            return $this->redirectToRoute('createCollege');
         }
         return $this->render('college/index.html.twig', [
        

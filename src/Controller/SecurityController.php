@@ -9,14 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Form\RegistrationType;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/registration", name="creat_admin")
      */
-    public function registration(Request $request): Response
+    public function registration(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $data = new UserRegistration();
        
@@ -25,6 +25,7 @@ class SecurityController extends AbstractController
         $data->setRoles(['ROLE_ADMIN']);
         if($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
+            $data->setPassword($encoder->encodePassword($data, $data->getPassword()));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($data);
             $entityManager->flush();

@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use App\Form\SudentType;
+use App\Form\UserType;
 use App\Form\SearchUserType;
 use App\Form\UpdateType;
 use App\Repository\UserEntityRepository;
@@ -38,6 +38,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user", name="createUser")
+     * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
@@ -45,7 +46,7 @@ class UserController extends AbstractController
     {
         $data = new UserEntity();
        
-        $form = $this->createForm(SudentType::class, $data);
+        $form = $this->createForm(UserType::class, $data);
         $form->handleRequest($request);
     
         if($form->isSubmitted() && $form->isValid()){
@@ -66,6 +67,7 @@ class UserController extends AbstractController
     
     /**
      * @Route("usershow", name="show_users")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(Request $request): Response
     {
@@ -79,10 +81,11 @@ class UserController extends AbstractController
 
     /**
      * @Route("user/{id}/edit", name="user_edit")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, UserEntity $user): Response
     {
-        $form = $this->createForm(SudentType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -106,6 +109,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/search", name="search")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function searchAction(Request $request):Response
     {

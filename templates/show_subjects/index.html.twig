@@ -11,7 +11,7 @@
   
 </style>
 
-      <form class="example-wrapper" role="search" id="form" method="GET" action="{{ path('searchsubject') }}">
+      <form class="example-wrapper noprint" role="search" id="form" method="GET" action="{{ path('searchsubject') }}">
     <div>
         <input type="text" class="form-control" name="search" id="search" placeholder="أدخل اسم المادة">
         <button type="submit" class="btn btn-success" name="sub">بحث</button>
@@ -31,7 +31,7 @@
   <thead>
     <tr>
       <th scope="col"> اسم المادة</th>
-      <th scope="col">اسم الكلي</th>
+      <th scope="col">اسم الكلية</th>
       <th scope="col">درجة النجاح</th>
     </tr>
   </thead>
@@ -43,7 +43,7 @@
       <td id="td">{{item.college.collegeName}}</td>
       <td id="td">{{item.passingGrade}}</td>
        <td> 
-        <a class="btn btn-primary" href="{{ path('subject_edit', { id: item.id }) }}">تعديل</a>
+        <a class="btn btn-primary noprint" href="{{ path('subject_edit', { id: item.id }) }}">تعديل</a>
         </td> 
     </tr>
   {% endfor %}
@@ -51,7 +51,7 @@
   </tbody>
   </table>
   
-    <div class="navigation mt-5">
+    <div class="navigation mt-5 noprint">
         {{ knp_pagination_render(subjects) }}
     </div>
     

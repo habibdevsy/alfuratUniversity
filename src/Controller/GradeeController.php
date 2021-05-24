@@ -20,18 +20,21 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
 
+
 class GradeeController extends AbstractController
 {
 
     private $gradeeEntityRepository ;
-    public function __construct(GradeeEntityRepository $gradeeEntityRepository, PaginatorInterface $paginator)
+    public function __construct(GradeeEntityRepository $gradeeEntityRepository,UserEntityRepository $userEntityRepository, PaginatorInterface $paginator)
     {
         $this->gradeeEntityRepository = $gradeeEntityRepository;
         $this->paginator = $paginator;      
+        $this->userEntityRepository = $userEntityRepository;      
        
     }  
     /**
      * @Route("/grade", name="createGrade")
+     * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
@@ -49,6 +52,7 @@ class GradeeController extends AbstractController
             $entityManager->persist($data);
             $entityManager->flush();
             $entityManager->clear();
+            return $this->redirectToRoute('show_grades');
         }
         return $this->render('gradee/index.html.twig', [
        
@@ -70,12 +74,13 @@ class GradeeController extends AbstractController
 
      /**
      * @Route("gradeshow", name="show_grades")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(Request $request): Response
     {
         $users = $this->paginator->paginate($this->gradeeEntityRepository->findAll(),
         $request->query->getInt('page',1),
-        5);
+        50);
         return $this->render('show_grade/index.html.twig', [
             'grades' => $users,
         ]);
@@ -83,6 +88,7 @@ class GradeeController extends AbstractController
 
     /**
      * @Route("grade/{id}", name="grade_edit")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, GradeeEntity $grade): Response
     {
@@ -110,6 +116,7 @@ class GradeeController extends AbstractController
 
     /**
      * @Route("/searchgrade", name="searchgrade")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function searchAction(Request $request):Response
     { 
@@ -123,4 +130,25 @@ class GradeeController extends AbstractController
                 'grades' => $results,
             ]);
         }
+
+     /**
+     * @Route("mygrade", name="my_grade")
+     * @IsGranted("ROLE_USER")
+     */
+    public function mygrade(Request $request): Response
+    {
+        $users = $this->paginator->paginate($this->getGradeByCardNumber($this->getUser()->getUsername()),
+        $request->query->getInt('page',1),
+        50);
+        return $this->render('show_my_grade/index.html.twig', [
+            'grades' => $users,
+        ]);
+    }
+    
+    public function getGradeByCardNumber($cardeNumber)
+    {
+       $user = $this->userEntityRepository->getUserByCardNumber($cardeNumber);
+       return $this->gradeeEntityRepository->getGradeById($user);
+
+    }
 }

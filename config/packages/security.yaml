@@ -1,9 +1,10 @@
 security:
     encoders:
-        App\Entity\UserEntity:
-            algorithm: auto
+        # App\Entity\UserEntity:
+        #     algorithm: auto
         App\Entity\UserRegistration:
             algorithm: auto
+            #  algorithm: bcrypt
 
 
     providers:
@@ -14,41 +15,19 @@ security:
                 property: username
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
-
-        login:
-            pattern:  ^/login
-            stateless: true
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
             anonymous: true
-            json_login:
-                check_path:               /login_check
-                success_handler:          lexik_jwt_authentication.handler.authentication_success
-                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
             guard:
                 authenticators:
                     - App\Security\LoginAuthenticator
             logout:
                 path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
 
-        main:
-            stateless: true
-            anonymous: ~
-            logout:
-                path: /logout
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
-                entry_point: lexik_jwt_authentication.jwt_token_authenticator
-
-        register:
-            pattern:  ^/register
-            stateless: true
-            anonymous: true
-
-        api:
-            pattern:   ^/user
-            stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+    access_control:
+        # if you wanted to force EVERY URL to be protected
+        # - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }

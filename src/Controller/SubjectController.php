@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class SubjectController extends AbstractController
 {
@@ -29,6 +30,7 @@ class SubjectController extends AbstractController
 
     /**
      * @Route("/subject", name="createSubject")
+     * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
      */
@@ -54,6 +56,7 @@ class SubjectController extends AbstractController
 
     /**
      * @Route("subject/{id}/edit", name="subject_edit")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, SubjectEntity $subject): Response
     {
@@ -75,12 +78,13 @@ class SubjectController extends AbstractController
     
     /**
      * @Route("showsubjects", name="show_subjects")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(Request $request): Response
     {
         $subjects = $this->paginator->paginate($this->subjectEntityRepository->findAll(),
         $request->query->getInt('page',1),
-        5);
+        50);
         return $this->render('show_subjects/index.html.twig', [
             'subjects' => $subjects,
         ]);
@@ -88,6 +92,7 @@ class SubjectController extends AbstractController
 
       /**
      * @Route("/searchsubject", name="searchsubject")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function searchAction(Request $request):Response
     {

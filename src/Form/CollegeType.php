@@ -18,18 +18,9 @@ class CollegeType extends AbstractType
                 'label'=>"اسم الكلية",
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'أدخل اسم الكلية',
-                    'maxlength' => 3
+                    'placeholder' => 'أدخل اسم الكلية'
                 ]
             ])
-            // ->add('collegeCode', TextType::class,[
-            //     'label'=>"رمز الكلية",
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => 'أدخل رمز الكلية',
-            //         'maxlength' => 3
-            //     ]
-            // ])
         ;
     }
 

@@ -11,7 +11,7 @@
   
 </style>
 
-      <form class="example-wrapper" role="search" id="form" method="GET" action="{{ path('search') }}">
+      <form class="example-wrapper noprint" role="search" id="form" method="GET" action="{{ path('search') }}">
     <div>
         <input type="text" class="form-control" name="search" id="search" placeholder="أدخل اسم طالب">
         <button type="submit" class="btn btn-success" name="sub">بحث</button>
@@ -42,7 +42,7 @@
       <td id="td">{{user.cardNumber}}</td>
       <td id="td">{{user.college.collegeName}}</td>
        <td> 
-        <a class="btn btn-primary" href="{{ path('user_edit', { id: user.id }) }}">تعديل</a>
+        <a class="btn btn-primary noprint" href="{{ path('user_edit', { id: user.id }) }}">تعديل</a>
         </td> 
     </tr>
   {% endfor %}
@@ -50,7 +50,7 @@
   </tbody>
   </table>
   
-    <div class="navigation mt-5">
+    <div class="navigation mt-5 noprint">
         {{ knp_pagination_render(users) }}
     </div>
     

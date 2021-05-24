@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}بحث عن مواد طالب{% endblock %}
+{% block title %}مواد الطالب{% endblock %}
 
 {% block body %}
 <style>
@@ -8,32 +8,20 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style> <br />
 <div class="alert alert-dismissible alert-primary noprint">
-    <h2 style="text-align:center">بحث عن مواد طالب</h2>
+    <h2 style="text-align:center">مواد الطالب</h2>
 </div>
-      <form class="example-wrapper noprint" role="search" id="form" method="GET" action="{{ path('searchgrade') }}">
-    <div>
-        <input type="text" class="form-control" name="search" id="search" placeholder="أدخل اسم طالب">
-        <br />
-        <button type="submit" class="btn btn-success" name="sub">بحث</button>
-    </div>
-    </form>
 
 <script>
  $('#print').submit();
-
 </script>
-
     
 <table class="table table-hover" id="table">
   <thead>
-    <tr>
-      <th scope="col"> اسم الطالب</th>
-      <th scope="col">الكلية</th>
-      <th scope="col">الرقم الجامعي</th>
-      <th scope="col">الدرجة</th>
-      <th scope="col">التاريخ</th>
+    <tr>     
       <th scope="col">المادة</th>
+        <th scope="col">الدرجة</th>
       <th scope="col">النجاح</th> 
+       <th scope="col">التاريخ</th>
       <th>
         <button  type="submit" class="btn btn-success noprint" name="print" id="print" onclick="print()"> طباعة</button>   
       </th>  
@@ -43,13 +31,8 @@
   
   {% for item in grades %}
     <tr class="table-active">
-      <td id="td">{{item.user.userName}}</td>
-      <td id="td">{{item.user.college.collegeName}}</td>
-      <td id="td">{{item.user.cardNumber}}</td>
-      <td id="td">{{item.grade}}</td>
-      <td id="td">{{ item.createDate|date('y-m-d')}}</td>
       <td id="td">{{ item.Subject.subjectName}}</td>
-      {# <td id="td">{{item.passedFiled}}</td>  #}
+      <td id="td">{{item.grade}}</td>
       <td id="td">
       {% if item.passedFiled == true %}
            ناجح
@@ -58,9 +41,7 @@
            <p style="color:red">راسب</p>
       {% endif %}
       </td> 
-       <td> 
-        <a class="btn btn-primary noprint" href="{{ path('grade_edit', { id: item.id }) }}">تعديل</a>
-        </td> 
+      <td id="td">{{ item.createDate|date('y-m-d')}}</td>
     </tr>
     
        {% endfor %}
