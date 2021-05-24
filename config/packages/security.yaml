@@ -25,6 +25,7 @@ security:
                     - App\Security\LoginAuthenticator
             logout:
                 path: app_logout
+                target: app_login
 
     access_control:
         # if you wanted to force EVERY URL to be protected
