@@ -38,6 +38,7 @@ class SecurityController extends AbstractController
             'registrationform' => $form->createView()
         ]);
      }
+     
     /**
      * @Route("/userregistration", name="creat_user")
      */

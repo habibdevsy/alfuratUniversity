@@ -17,7 +17,7 @@ class RegistrationType extends AbstractType
                 'label'=>"اسم المستخدم",
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'أدخل اسم المستخدم'
+                    'placeholder' => 'رقم البطاقة الجامعية مسبوقاً برمز الكلية'
                 ]
             ])
             // ->add('roles')

@@ -35,10 +35,10 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('cardNumber', TextType::class,[
-                'label'=>"رقم البطاقة الجامعية",
+                'label'=>" رقم البطاقة الجامعية",
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'أدخل رقم البطاقة الجامعية'
+                    'placeholder' => ' أدخل رقم البطاقة الجامعية مع رمز الكلية'
                 ]
             ]);
     }

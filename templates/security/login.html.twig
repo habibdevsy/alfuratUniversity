@@ -3,16 +3,17 @@
 {% block title %}تسجيل الدخول{% endblock %}
 
 {% block body %}
+<br />
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    {% if app.user %}
+    {# {% if app.user %}
         <div class="mb-3">
             You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
-    {% endif %}
+    {% endif %} #}
 
     <h1 class="h3 mb-3 font-weight-normal">أدخل بياناتك لتسجيل الدخول</h1>
     <label for="inputUserID">اسم المستخدم</label>
@@ -35,8 +36,11 @@
         </div>
     #}
 <br />
-    <button class="btn btn-lg btn-primary" type="submit">
+    <button class="btn btn-success" type="submit">
         دخول
     </button>
+    <div class="mb-3">
+           إذا لم يكن لديك حساب قم بإنشاء حساب جديد, <a href="{{ path('creat_user') }}">إنشاء حساب</a>
+        </div>
 </form>
 {% endblock %}
